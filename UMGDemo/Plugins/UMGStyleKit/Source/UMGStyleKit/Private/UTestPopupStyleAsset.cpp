@@ -9,8 +9,10 @@ UTestPopupStyleAsset::UTestPopupStyleAsset() {
   // Button: Light brown #C4A484 -> RGB(196, 164, 132) / 255
   // Text: Dark brown #5D4037 -> RGB(93, 64, 55) / 255
 
-  const FLinearColor PastelBeige(0.961f, 0.922f, 0.878f, 1.0f);
-  const FLinearColor PastelPink(1.0f, 0.839f, 0.878f, 1.0f);
+  const FLinearColor PastelBeige(0.961f, 0.922f, 0.878f,
+                                 0.1f); // 10% opacity for glass effect
+  const FLinearColor PastelPink(1.0f, 0.839f, 0.878f,
+                                0.1f); // 10% opacity for glass effect
   const FLinearColor LightBrown(0.769f, 0.643f, 0.518f, 1.0f);
   const FLinearColor LightBrownHover(0.82f, 0.7f, 0.58f, 1.0f);
   const FLinearColor LightBrownPressed(0.7f, 0.58f, 0.45f, 1.0f);

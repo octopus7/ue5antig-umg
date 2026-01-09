@@ -2,6 +2,7 @@
 
 #include "UTestPopupWidget.h"
 #include "Blueprint/WidgetTree.h"
+#include "Components/BackgroundBlur.h"
 #include "Components/Border.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
@@ -49,6 +50,13 @@ void UTestPopupWidget::BuildUI() {
   PopupSizeBox = WidgetTree->ConstructWidget<USizeBox>(USizeBox::StaticClass());
   PopupSizeBox->SetWidthOverride(400.f);
   PopupSizeBox->SetHeightOverride(200.f);
+
+  // Create BackgroundBlur widget for frosted glass effect
+  BackgroundBlurWidget = WidgetTree->ConstructWidget<UBackgroundBlur>(
+      UBackgroundBlur::StaticClass());
+  BackgroundBlurWidget->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+  BackgroundBlurWidget->SetBlurStrength(
+      10.0f); // Default value, will be overridden in ApplyStyles
 
   // Create Panel Border (popup container)
   PanelBorder = WidgetTree->ConstructWidget<UBorder>(UBorder::StaticClass());
@@ -160,8 +168,11 @@ void UTestPopupWidget::BuildUI() {
   // Set main vertical box as panel content
   PanelBorder->SetContent(MainVerticalBox);
 
-  // Put panel in size box
-  PopupSizeBox->SetContent(PanelBorder);
+  // Wrap PanelBorder with BackgroundBlur
+  BackgroundBlurWidget->SetContent(PanelBorder);
+
+  // Put background blur in size box
+  PopupSizeBox->SetContent(BackgroundBlurWidget);
 
   // Add size box to canvas and center it
   UCanvasPanelSlot *PopupSlot = RootCanvas->AddChildToCanvas(PopupSizeBox);
@@ -192,6 +203,18 @@ void UTestPopupWidget::ApplyStyles() {
   if (PopupSizeBox) {
     PopupSizeBox->SetWidthOverride(EffectiveStyle->PopupSize.X);
     PopupSizeBox->SetHeightOverride(EffectiveStyle->PopupSize.Y);
+  }
+
+  // Apply background blur settings
+  if (BackgroundBlurWidget) {
+    if (EffectiveStyle->bEnableBackgroundBlur) {
+      BackgroundBlurWidget->SetBlurStrength(
+          EffectiveStyle->BackgroundBlurStrength);
+      BackgroundBlurWidget->SetVisibility(
+          ESlateVisibility::SelfHitTestInvisible);
+    } else {
+      BackgroundBlurWidget->SetBlurStrength(0.0f);
+    }
   }
 
   // Apply panel style

@@ -7,6 +7,7 @@
 #include "UTestPopupWidget.generated.h"
 
 class UTestPopupStyleAsset;
+class UBackgroundBlur;
 class UBorder;
 class UTextBlock;
 class UButton;
@@ -76,6 +77,9 @@ private:
 
   UPROPERTY()
   TObjectPtr<USizeBox> PopupSizeBox;
+
+  UPROPERTY()
+  TObjectPtr<UBackgroundBlur> BackgroundBlurWidget;
 
   /** Build the widget hierarchy */
   void BuildUI();

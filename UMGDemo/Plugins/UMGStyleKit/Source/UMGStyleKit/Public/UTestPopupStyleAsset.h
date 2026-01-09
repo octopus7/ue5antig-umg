@@ -35,6 +35,16 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Panel")
   FVector2D PopupSize = FVector2D(400.f, 200.f);
 
+  /** Enable background blur effect (frosted glass look) */
+  UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Panel")
+  bool bEnableBackgroundBlur = true;
+
+  /** Blur strength when background blur is enabled (0-100) */
+  UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Panel",
+            meta = (EditCondition = "bEnableBackgroundBlur", ClampMin = "0.0",
+                    ClampMax = "100.0"))
+  float BackgroundBlurStrength = 10.0f;
+
   // ========== Title Area ==========
 
   /** Background brush for the title bar */
