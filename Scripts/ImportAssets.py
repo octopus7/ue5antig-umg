@@ -71,8 +71,9 @@ def import_assets():
                         obj.set_editor_property("mip_gen_settings", unreal.TextureMipGenSettings.TMGS_NO_MIPMAPS)
                         # Set LOD group to UI
                         obj.set_editor_property("lod_group", unreal.TextureGroup.TEXTUREGROUP_UI)
-                        # Apply changes
-                        obj.update_resource()
+                        # Save the modified asset
+                        asset_path = f"{dest_content_path}/{task.destination_name}"
+                        unreal.EditorAssetLibrary.save_asset(asset_path)
                         unreal.log(f"  -> Configured as UI texture (no compression, no mipmaps, UI group)")
             else:
                 unreal.log_warning(f"Failed to import: {source_path}")
