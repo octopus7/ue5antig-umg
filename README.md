@@ -138,6 +138,20 @@ Edit → Project Settings → Maps & Modes
 
 ## 커스터마이징
 
+### AntiGravity AI 에셋 생성
+
+AntiGravity AI를 활용하면 게임 에셋을 빠르게 생성하고 자동으로 임포트할 수 있습니다.
+
+![AntiGravity 케이크 에셋 생성 예시](Docs/Images/antigravity_cake_generation.png)
+
+**워크플로우:**
+1. 자연어로 에셋 설명 (예: "귀여운 케이크 이미지 2x2 생성")
+2. AI가 이미지 생성 및 분할 처리
+3. 투명도 자동 추출
+4. Remote Execution으로 언리얼 에디터에 자동 임포트
+
+---
+
 ### 에셋 임포트
 
 원본 이미지는 `UMGDemo-Images/` 폴더에 저장되어 있으며, Python 스크립트로 에디터에 임포트할 수 있습니다.
