@@ -138,11 +138,27 @@ Edit → Project Settings → Maps & Modes
 
 ## 커스터마이징
 
+### 에셋 임포트
+
+원본 이미지는 `UMGDemo-Images/` 폴더에 저장되어 있으며, Python 스크립트로 에디터에 임포트할 수 있습니다.
+
+**Unreal Editor에서 실행:**
+1. `Tools → Execute Python Script` 선택
+2. `Scripts/ImportAssets.py` 선택
+3. 임포트 완료
+
+**폴더 구조:**
+```
+UMGDemo-Images/          ← 원본 이미지 (버전관리)
+└── UI/Textures/
+    └── T_PinkDotPattern.png
+```
+
 ### 패턴 텍스처 적용
 
 타이틀바에 도트 패턴 등의 텍스처를 적용하려면:
 
-1. 패턴 이미지를 Content 폴더에 임포트
+1. 위 스크립트로 이미지 임포트
 2. Data Asset에서 `Title Background Brush → Image`에 텍스처 연결
 3. `Draw As`를 `Image`로 변경
 
