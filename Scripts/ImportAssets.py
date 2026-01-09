@@ -9,10 +9,12 @@ def import_assets():
     """
     Import assets from UMGDemo-Images folder to Content folder.
     Source structure mirrors the target Content structure.
+    Skips import if source file is older than existing uasset.
     """
     
     # Get project paths
     project_dir = unreal.Paths.project_dir()
+    content_dir = os.path.join(project_dir, "Content")
     repo_root = os.path.dirname(project_dir.rstrip('/\\'))
     source_root = os.path.join(repo_root, "UMGDemo-Images")
     
@@ -27,6 +29,7 @@ def import_assets():
     
     # Walk through source directory
     imported_count = 0
+    skipped_count = 0
     for root, dirs, files in os.walk(source_root):
         for filename in files:
             # Skip non-image files
@@ -35,6 +38,24 @@ def import_assets():
                 continue
             
             source_path = os.path.join(root, filename)
+            
+            # Calculate relative path and check if uasset exists
+            rel_path = os.path.relpath(root, source_root)
+            asset_name = os.path.splitext(filename)[0]
+            
+            # Build path to potential existing uasset
+            if rel_path == '.':
+                uasset_path = os.path.join(content_dir, f"{asset_name}.uasset")
+            else:
+                uasset_path = os.path.join(content_dir, rel_path, f"{asset_name}.uasset")
+            
+            # Skip if source is older than existing uasset
+            if os.path.exists(uasset_path):
+                source_mtime = os.path.getmtime(source_path)
+                uasset_mtime = os.path.getmtime(uasset_path)
+                if source_mtime < uasset_mtime:
+                    skipped_count += 1
+                    continue  # Source is older, skip import
             
             # Calculate relative path from source root
             rel_path = os.path.relpath(root, source_root)
@@ -78,7 +99,7 @@ def import_assets():
             else:
                 unreal.log_warning(f"Failed to import: {source_path}")
     
-    unreal.log(f"=== Import Complete: {imported_count} assets imported ===")
+    unreal.log(f"=== Import Complete: {imported_count} imported, {skipped_count} skipped (unchanged) ===")
 
 # Run the import
 if __name__ == "__main__":
