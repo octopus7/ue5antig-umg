@@ -170,4 +170,4 @@ Edit → Project Settings → Maps & Modes
 
 ## 라이선스
 
-Copyright octopus7. All Rights Reserved.
+MIT License - 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
