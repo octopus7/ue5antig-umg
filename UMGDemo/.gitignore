@@ -1,0 +1,89 @@
+# Unreal Engine 5 .gitignore
+
+# Build folders
+Binaries/
+Build/
+DerivedDataCache/
+
+# Intermediate folders
+Intermediate/
+Saved/
+
+# Platform specific folders
+Platforms/
+
+# IDE files
+.vs/
+.vscode/
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+.idea/
+
+# Visual Studio Code
+*.code-workspace
+
+# Rider
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Generated files
+*.generated.h
+*.gen.cpp
+
+# Plugin intermediate and build files
+Plugins/**/Binaries/
+Plugins/**/Intermediate/
+
+# Asset files generated during cooking
+Content/**/AssetRegistry.bin
+
+# Local user config
+Saved/Config/WindowsEditor/
+*.user
+
+# Crashlog
+CrashReportClient/
+
+# Automation
+Automation/
+
+# DDC
+DDC/
+
+# Source control
+*.orig
+*.rej
+
+# Compiled Object files
+*.o
+*.obj
+
+# Precompiled Headers
+*.pch
+
+# Compiled Dynamic libraries
+*.dll
+*.dylib
+*.so
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Executables
+*.exe
+
+# Debug files
+*.pdb
+*.ilk
+*.exp
