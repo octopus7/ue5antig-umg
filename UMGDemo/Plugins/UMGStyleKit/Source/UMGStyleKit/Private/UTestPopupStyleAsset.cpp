@@ -19,20 +19,29 @@ UTestPopupStyleAsset::UTestPopupStyleAsset() {
   const FLinearColor DarkBrown(0.365f, 0.251f, 0.216f, 1.0f);
   const FLinearColor CreamWhite(0.98f, 0.96f, 0.94f, 1.0f);
 
-  // Panel: Pastel beige with rounded corners
+  // Button colors: Dark muted brown/gray from design
+  const FLinearColor ButtonDark(0.35f, 0.32f, 0.30f, 1.0f); // Dark gray-brown
+  const FLinearColor ButtonDarkHover(0.42f, 0.38f, 0.35f,
+                                     1.0f); // Lighter on hover
+  const FLinearColor ButtonDarkPressed(0.28f, 0.25f, 0.22f,
+                                       1.0f); // Darker on press
+
+  // Panel: Pastel beige with rounded corners and white outline
   PanelBrush.TintColor = FSlateColor(PastelBeige);
   PanelBrush.DrawAs = ESlateBrushDrawType::RoundedBox;
   PanelBrush.OutlineSettings.CornerRadii = FVector4(8.f, 8.f, 8.f, 8.f);
   PanelBrush.OutlineSettings.RoundingType =
       ESlateBrushRoundingType::FixedRadius;
+  PanelBrush.OutlineSettings.Color = FLinearColor::White;
+  PanelBrush.OutlineSettings.Width = 1.5f;
 
   // Title bar: Pastel pink (texture can be set in editor for dot pattern)
   TitleBackgroundBrush.TintColor = FSlateColor(PastelPink);
   TitleBackgroundBrush.DrawAs = ESlateBrushDrawType::Box;
 
-  // Title text: Dark brown, bold
+  // Title text: White for glass effect contrast
   TitleFont = FCoreStyle::GetDefaultFontStyle("Bold", 14);
-  TitleTextColor = FSlateColor(DarkBrown);
+  TitleTextColor = FSlateColor(FLinearColor::White);
 
   // Client area: Transparent (uses panel background)
   ClientBackgroundBrush.TintColor =
@@ -43,19 +52,19 @@ UTestPopupStyleAsset::UTestPopupStyleAsset() {
   MessageFont = FCoreStyle::GetDefaultFontStyle("Regular", 12);
   MessageTextColor = FSlateColor(DarkBrown);
 
-  // Button: Light brown with rounded corners
+  // Button: Dark muted brown with rounded corners
   FSlateBrush ButtonNormalBrush;
-  ButtonNormalBrush.TintColor = FSlateColor(LightBrown);
+  ButtonNormalBrush.TintColor = FSlateColor(ButtonDark);
   ButtonNormalBrush.DrawAs = ESlateBrushDrawType::RoundedBox;
   ButtonNormalBrush.OutlineSettings.CornerRadii = FVector4(6.f, 6.f, 6.f, 6.f);
   ButtonNormalBrush.OutlineSettings.RoundingType =
       ESlateBrushRoundingType::FixedRadius;
 
   FSlateBrush ButtonHoveredBrush = ButtonNormalBrush;
-  ButtonHoveredBrush.TintColor = FSlateColor(LightBrownHover);
+  ButtonHoveredBrush.TintColor = FSlateColor(ButtonDarkHover);
 
   FSlateBrush ButtonPressedBrush = ButtonNormalBrush;
-  ButtonPressedBrush.TintColor = FSlateColor(LightBrownPressed);
+  ButtonPressedBrush.TintColor = FSlateColor(ButtonDarkPressed);
 
   OKButtonStyle.SetNormal(ButtonNormalBrush);
   OKButtonStyle.SetHovered(ButtonHoveredBrush);
