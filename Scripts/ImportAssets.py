@@ -61,6 +61,19 @@ def import_assets():
             if imported_objects:
                 unreal.log(f"Imported: {source_path} -> {dest_content_path}/{task.destination_name}")
                 imported_count += 1
+                
+                # Configure texture settings for UI
+                for obj in imported_objects:
+                    if isinstance(obj, unreal.Texture2D):
+                        # No compression for crisp UI
+                        obj.set_editor_property("compression_settings", unreal.TextureCompressionSettings.TC_EDITOR_ICON)
+                        # No mipmaps for UI textures
+                        obj.set_editor_property("mip_gen_settings", unreal.TextureMipGenSettings.TMGS_NO_MIPMAPS)
+                        # Set LOD group to UI
+                        obj.set_editor_property("lod_group", unreal.TextureGroup.TEXTUREGROUP_UI)
+                        # Apply changes
+                        obj.update_resource()
+                        unreal.log(f"  -> Configured as UI texture (no compression, no mipmaps, UI group)")
             else:
                 unreal.log_warning(f"Failed to import: {source_path}")
     
