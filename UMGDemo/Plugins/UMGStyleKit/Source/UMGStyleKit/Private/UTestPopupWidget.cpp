@@ -4,6 +4,8 @@
 #include "Blueprint/WidgetTree.h"
 #include "Components/Border.h"
 #include "Components/Button.h"
+#include "Components/CanvasPanel.h"
+#include "Components/CanvasPanelSlot.h"
 #include "Components/HorizontalBox.h"
 #include "Components/HorizontalBoxSlot.h"
 #include "Components/SizeBox.h"
@@ -38,7 +40,17 @@ void UTestPopupWidget::NativeConstruct() {
 }
 
 void UTestPopupWidget::BuildUI() {
-  // Create Panel Border (outermost container) using WidgetTree
+  // Create root overlay for centering
+  UCanvasPanel *RootCanvas =
+      WidgetTree->ConstructWidget<UCanvasPanel>(UCanvasPanel::StaticClass());
+  RootCanvas->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+
+  // SizeBox to constrain popup size
+  PopupSizeBox = WidgetTree->ConstructWidget<USizeBox>(USizeBox::StaticClass());
+  PopupSizeBox->SetWidthOverride(400.f);
+  PopupSizeBox->SetHeightOverride(200.f);
+
+  // Create Panel Border (popup container)
   PanelBorder = WidgetTree->ConstructWidget<UBorder>(UBorder::StaticClass());
   PanelBorder->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 
@@ -105,8 +117,8 @@ void UTestPopupWidget::BuildUI() {
   // OK Button with size box for minimum size
   USizeBox *ButtonSizeBox =
       WidgetTree->ConstructWidget<USizeBox>(USizeBox::StaticClass());
-  ButtonSizeBox->SetMinDesiredWidth(120.f);
-  ButtonSizeBox->SetMinDesiredHeight(40.f);
+  ButtonSizeBox->SetMinDesiredWidth(100.f);
+  ButtonSizeBox->SetMinDesiredHeight(36.f);
 
   OKButton = WidgetTree->ConstructWidget<UButton>(UButton::StaticClass());
   OKButton->SetVisibility(ESlateVisibility::Visible);
@@ -148,8 +160,17 @@ void UTestPopupWidget::BuildUI() {
   // Set main vertical box as panel content
   PanelBorder->SetContent(MainVerticalBox);
 
-  // Set panel as root widget using WidgetTree
-  WidgetTree->RootWidget = PanelBorder;
+  // Put panel in size box
+  PopupSizeBox->SetContent(PanelBorder);
+
+  // Add size box to canvas and center it
+  UCanvasPanelSlot *PopupSlot = RootCanvas->AddChildToCanvas(PopupSizeBox);
+  PopupSlot->SetAnchors(FAnchors(0.5f, 0.5f, 0.5f, 0.5f));
+  PopupSlot->SetAlignment(FVector2D(0.5f, 0.5f));
+  PopupSlot->SetAutoSize(true);
+
+  // Set canvas as root widget
+  WidgetTree->RootWidget = RootCanvas;
 }
 
 void UTestPopupWidget::ApplyStyles() {
@@ -165,6 +186,12 @@ void UTestPopupWidget::ApplyStyles() {
 
   if (!EffectiveStyle) {
     return;
+  }
+
+  // Apply popup size
+  if (PopupSizeBox) {
+    PopupSizeBox->SetWidthOverride(EffectiveStyle->PopupSize.X);
+    PopupSizeBox->SetHeightOverride(EffectiveStyle->PopupSize.Y);
   }
 
   // Apply panel style

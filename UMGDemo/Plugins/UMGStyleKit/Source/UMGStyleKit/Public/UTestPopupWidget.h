@@ -6,13 +6,14 @@
 #include "CoreMinimal.h"
 #include "UTestPopupWidget.generated.h"
 
-
 class UTestPopupStyleAsset;
 class UBorder;
 class UTextBlock;
 class UButton;
 class UVerticalBox;
 class USizeBox;
+class UCanvasPanel;
+class UCanvasPanelSlot;
 
 /**
  * Test popup widget demonstrating style asset integration.
@@ -72,6 +73,9 @@ private:
 
   UPROPERTY()
   TObjectPtr<UTextBlock> OKButtonText;
+
+  UPROPERTY()
+  TObjectPtr<USizeBox> PopupSizeBox;
 
   /** Build the widget hierarchy */
   void BuildUI();

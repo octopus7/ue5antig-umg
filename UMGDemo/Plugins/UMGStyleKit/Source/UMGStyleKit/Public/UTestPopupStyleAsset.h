@@ -19,6 +19,8 @@ class UMGSTYLEKIT_API UTestPopupStyleAsset : public UDataAsset {
   GENERATED_BODY()
 
 public:
+  UTestPopupStyleAsset();
+
   // ========== Panel (Overall Popup Container) ==========
 
   /** Background brush for the entire popup panel */
@@ -28,6 +30,10 @@ public:
   /** Padding inside the panel */
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Panel")
   FMargin PanelPadding = FMargin(0.f);
+
+  /** Desired popup size (width x height) */
+  UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Panel")
+  FVector2D PopupSize = FVector2D(400.f, 200.f);
 
   // ========== Title Area ==========
 
@@ -45,7 +51,7 @@ public:
 
   /** Padding inside the title area */
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title")
-  FMargin TitlePadding = FMargin(16.f, 8.f);
+  FMargin TitlePadding = FMargin(16.f, 10.f);
 
   // ========== Client Area ==========
 
@@ -55,7 +61,7 @@ public:
 
   /** Padding inside the client area */
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Client")
-  FMargin ClientPadding = FMargin(16.f);
+  FMargin ClientPadding = FMargin(20.f);
 
   // ========== Message Text ==========
 
@@ -83,5 +89,5 @@ public:
 
   /** Minimum size for the button */
   UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Button")
-  FVector2D ButtonMinSize = FVector2D(120.f, 40.f);
+  FVector2D ButtonMinSize = FVector2D(100.f, 36.f);
 };
